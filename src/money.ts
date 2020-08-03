@@ -128,17 +128,13 @@ export class Money {
         this.currency,
         this.round
       );
+    } else if (exponent < 0) {
+      return new Money(1, this.currency, this.round).divide(this.pow(-exponent));
+    } else if (exponent === 1) {
+      return this;
     } else {
-      // This handles the 0, 1 and negative exponent cases.
-      // This uses an iterative approach and is therefore not going to super
-      // fast.
-      let base:Money = this;
-      for(let i = 1; i > exponent; i--) {
-        base = base.divide(this);
-      }
-      return base;
+      return new Money(1, this.currency, this.round);
     }
-
   }
 
   /**
